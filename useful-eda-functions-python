@@ -1,0 +1,43 @@
+# Function for plotting categorical features in a DataFrame
+
+def plot_cats(df=df, color='navy'):
+    '''
+    Plot Normalized Value Counts for Categorical Columns
+    
+    Filters categorical columns from the DataFrame and plots their normalized value counts for exploratory data analysis.
+    
+    Parameters:
+    - df : DataFrame
+        Input DataFrame.
+    - color : str, optional
+        Color of the bars in the plots. Default is 'navy'.
+    '''
+    ## Select categorical columns from the DataFrame
+    cat_columns = df.select_dtypes(include=['object', 'string', 'category']).columns
+    
+    # Check if there are any categorical columns
+    if len(cat_columns) == 0:
+        print("No categorical columns found in the DataFrame.")
+        return
+    
+    # Adjust the number of subplots and plot size with accordance to the number of columns
+    num_columns = len(cat_columns)
+    num_rows = (num_columns + 1) // 2  
+    
+    fig, axes = plt.subplots(num_rows, 2, figsize=(12, 6*num_rows))
+    axes = axes.flatten()
+    plt.subplots_adjust(hspace=0.5)
+    # Loop through all columns and plot normalized value counts
+    for i, col in enumerate(cat_columns):
+        ax = axes[i]
+        value_counts_norm = df[col].value_counts(normalize=True)
+        value_counts_norm.plot(kind='bar', ax=ax, color=color)
+        ax.set_title(f'Normalized Value Counts of {col}')
+        ax.set_xlabel(None)
+        ax.set_ylabel('Proportion')
+        ax.set_xticklabels(value_counts_norm.index, rotation=45)
+
+    if len(axes) > num_columns:
+        fig.delaxes(axes[-1])
+
+    plt.show()
