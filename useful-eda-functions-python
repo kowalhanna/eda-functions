@@ -6,14 +6,9 @@ def plot_cats(df=df, color='navy'):
     
     Filters categorical columns from the DataFrame and plots their normalized value counts for exploratory data analysis.
     
-    Parameters:
-    - df : DataFrame
-        Input DataFrame.
-    - color : str, optional
-        Color of the bars in the plots. Default is 'navy'.
     '''
     ## Select categorical columns from the DataFrame
-    cat_columns = df.select_dtypes(include=['object', 'string', 'category']).columns
+    cat_columns = df.select_dtypes(include=['object', 'category']).columns
     
     # Check if there are any categorical columns
     if len(cat_columns) == 0:
@@ -41,3 +36,124 @@ def plot_cats(df=df, color='navy'):
         fig.delaxes(axes[-1])
 
     plt.show()
+
+########################################################################
+
+# Function for calculating IQR and identifying outliers for a column
+
+def iqr_outliers(df, column):
+    '''
+    Calculate IQR and Identify Outliers for a Specific Column
+    
+    Calculates the Interquartile Range (IQR) of the specified column in the DataFrame and identifies outliers below Q1 and above Q3.
+    '''
+    # Check if the column exists in the DataFrame
+    if column not in df.columns:
+        print(f"Column '{column}' does not exist in the DataFrame.")
+        return None, None, None
+
+    # Check if the DataFrame is empty
+    if df.empty:
+        print("DataFrame is empty.")
+        return None, None, None
+
+    # Calculate the IQR of the column
+    q1 = df[column].quantile(0.25)
+    q3 = df[column].quantile(0.75)
+    iqr = q3 - q1
+    print(f"IQR: {iqr}")
+
+    # Subset the column to find outliers below q1
+    outliers_q1 = df[df[column] < q1]
+    num_outliers_q1 = len(outliers_q1)
+    print(f"Number of outliers below Q1: {num_outliers_q1}")
+
+    # Subset the column to find outliers above q3
+    outliers_q3 = df[df[column] > q3]
+    num_outliers_q3 = len(outliers_q3)
+    print(f"Number of outliers above Q3: {num_outliers_q3}")
+
+########################################################################
+
+# Function for plotting histograms of numerical columns in a DataFrame
+def plot_hist(df, color='navy'):
+    '''
+    Plot Histogram for Numerical Features in a DataFrame
+    
+    Filters numerical columns from the provided DataFrame and plots their histograms for exploratory data analysis.
+    
+    '''
+    # Select numerical columns from the DataFrame
+    num_columns = df.select_dtypes(include='number').columns
+    
+    # Check if there are any numerical columns
+    if len(num_columns) == 0:
+        print("No numerical columns found in the DataFrame.")
+        return
+    
+    # Calculate the number of rows needed for subplots
+    number_columns = len(num_columns)
+    number_rows = (number_columns + 1) // 2
+    
+    # Create subplots
+    fig, axes = plt.subplots(number_rows, 2, figsize=(12, 6*number_rows))
+    axes = axes.flatten()
+    plt.subplots_adjust(hspace=0.5)
+    
+    # Loop through numerical columns and plot histogram
+    for i, col in enumerate(num_columns):
+        ax = axes[i]
+        sns.histplot(data=df, x=col, color=color, ax=ax)
+        ax.set_title(f'Histogram of {col}')
+        ax.set_xlabel(None)
+        ax.set_ylabel('Count')
+    
+    # Remove excess subplot if the number of columns is odd
+    if number_columns % 2 != 0:
+        fig.delaxes(axes[-1])
+
+    plt.show()
+
+########################################################################
+
+# Function for plotting histograms of numerical columns in a DataFrame
+def plot_box(df, color='navy'):
+    '''
+    Plot Boxplots for Numerical Features in a DataFrame
+    
+    Filters numerical columns from the provided DataFrame and plots their histograms for exploratory data analysis.
+    
+    '''
+    # Select numerical columns from the DataFrame
+    num_columns = df.select_dtypes(include='number').columns
+    
+    # Check if there are any numerical columns
+    if len(num_columns) == 0:
+        print("No numerical columns found in the DataFrame.")
+        return
+    
+    # Calculate the number of rows needed for subplots
+    number_columns = len(num_columns)
+    number_rows = (number_columns + 1) // 2
+    
+    # Create subplots
+    fig, axes = plt.subplots(number_rows, 2, figsize=(12, 6*number_rows))
+    axes = axes.flatten()
+    plt.subplots_adjust(hspace=0.25)
+    
+    # Loop through numerical columns and plot histogram
+    for i, col in enumerate(num_columns):
+        ax = axes[i]
+        sns.boxplot(data=df, x=col, color=color, ax=ax)
+        ax.set_title(f'Boxplot of {col}')
+        ax.set_xlabel(None)
+        ax.set_ylabel('Value')
+    
+    # Remove excess subplot if the number of columns is odd
+    if number_columns % 2 != 0:
+        fig.delaxes(axes[-1])
+
+    plt.show()
+
+
+
