@@ -1,5 +1,5 @@
 # eda-functions
-This repository stores useful function for exploratory data analysis.
+This repository stores useful Python functions for exploratory data analysis.
 
 ## Exploratory Data Analysis Functions
 
