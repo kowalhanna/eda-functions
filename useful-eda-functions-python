@@ -39,13 +39,12 @@ def plot_cats(df=df, color='navy'):
 
 ########################################################################
 
-# Function for calculating IQR and identifying outliers for a column
-
-def iqr_outliers(df, column):
+# Function for calculating IQR and identifying instances below Q1 and above Q3 for a column
+def iqr_quantiles(df, column):
     '''
-    Calculate IQR and Identify Outliers for a Specific Column
+    Calculate IQR and instances below Q1 and above Q3 for a Specific Column
     
-    Calculates the Interquartile Range (IQR) of the specified column in the DataFrame and identifies outliers below Q1 and above Q3.
+    Calculates the Interquartile Range (IQR) of the specified column in the DataFrame and identifies instances below Q1 and above Q3.
     '''
     # Check if the column exists in the DataFrame
     if column not in df.columns:
@@ -63,15 +62,16 @@ def iqr_outliers(df, column):
     iqr = q3 - q1
     print(f"IQR: {iqr}")
 
-    # Subset the column to find outliers below q1
-    outliers_q1 = df[df[column] < q1]
-    num_outliers_q1 = len(outliers_q1)
-    print(f"Number of outliers below Q1: {num_outliers_q1}")
+    # Subset the column to find instances below q1
+    below_q1 = df[df[column] < q1]
+    num_below_q1 = len(below_q1)
+    print(f"Number of instances below Q1: {num_below_q1}")
 
-    # Subset the column to find outliers above q3
-    outliers_q3 = df[df[column] > q3]
-    num_outliers_q3 = len(outliers_q3)
-    print(f"Number of outliers above Q3: {num_outliers_q3}")
+    # Subset the column to find instances above q3
+    over_q3 = df[df[column] > q3]
+    num_over_q3 = len(over_q3)
+    print(f"Number of instances above Q3: {num_over_q3}")
+
 
 ########################################################################
 
