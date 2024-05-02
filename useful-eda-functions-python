@@ -42,7 +42,7 @@ def plot_cats(df=df, color='navy'):
 # Function for calculating IQR and identifying outliers for a column 
 def iqr_outliers(df, column):
     '''
-    Calculate IQR and identify outlier below Q1 and above Q3 for a specific column
+    Calculate IQR and identify outliers for a specific column
     
     Calculates the Interquartile Range (IQR) of the specified column in the DataFrame and identifies the number of outliers based on the IQR method.
     '''
