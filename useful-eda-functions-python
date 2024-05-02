@@ -39,22 +39,24 @@ def plot_cats(df=df, color='navy'):
 
 ########################################################################
 
-# Function for calculating IQR and identifying instances below Q1 and above Q3 for a column
+# Function for calculating IQR, identifying outliers, and instances below Q1 and above Q3 for a column
+
 def iqr_quantiles(df, column):
     '''
-    Calculate IQR and instances below Q1 and above Q3 for a Specific Column
+    Calculate IQR, identify outliers, and instances below Q1 and above Q3 for a specific column
     
-    Calculates the Interquartile Range (IQR) of the specified column in the DataFrame and identifies instances below Q1 and above Q3.
+    Calculates the Interquartile Range (IQR) of the specified column in the DataFrame, identifies outliers based on the IQR method,
+    and identifies instances below Q1 and above Q3.
     '''
     # Check if the column exists in the DataFrame
     if column not in df.columns:
         print(f"Column '{column}' does not exist in the DataFrame.")
-        return None, None, None
+        return None, None, None, None
 
     # Check if the DataFrame is empty
     if df.empty:
         print("DataFrame is empty.")
-        return None, None, None
+        return None, None, None, None
 
     # Calculate the IQR of the column
     q1 = df[column].quantile(0.25)
@@ -62,6 +64,10 @@ def iqr_quantiles(df, column):
     iqr = q3 - q1
     print(f"IQR: {iqr}")
 
+    # Identify outliers below q1 and above q3
+    outliers_below_q1 = df[df[column] < q1 - 1.5 * iqr]
+    outliers_above_q3 = df[df[column] > q3 + 1.5 * iqr]
+    
     # Subset the column to find instances below q1
     below_q1 = df[df[column] < q1]
     num_below_q1 = len(below_q1)
@@ -71,6 +77,8 @@ def iqr_quantiles(df, column):
     over_q3 = df[df[column] > q3]
     num_over_q3 = len(over_q3)
     print(f"Number of instances above Q3: {num_over_q3}")
+    
+    return outliers_below_q1, outliers_above_q3, below_q1, over_q3
 
 
 ########################################################################
