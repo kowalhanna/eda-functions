@@ -62,17 +62,21 @@ def iqr_outliers(df, column):
     iqr = q3 - q1
     print(f"IQR: {iqr}")
 
-    # Identify outliers below q1 and above q3
+    # Identify lower outliers below q1 - 1.5 * iqr and upper outliers above q3 + 1.5 * iqr
     lower_outliers = df[df[column] < q1 - 1.5 * iqr]
     upper_outliers = df[df[column] > q3 + 1.5 * iqr]
     
-    # Calculate the number of outliers below q1 and above q3
+    # Calculate the number of lower outliers and upper outliers
     num_lower_outliers = len(lower_outliers)
     num_upper_outliers = len(upper_outliers)
     num_total_outliers = num_lower_outliers + num_upper_outliers
     print(f"Number of lower outliers: {num_lower_outliers}")
     print(f"Number of upper outliers: {num_upper_outliers}")
     print(f"Total number of outliers: {num_total_outliers}")
+
+    # Calculate proportion of outliers in the dataset
+    proportion_outliers = num_total_outliers / len(df) * 100
+    print(f"Proportion of outliers in the dataset: {proportion_outliers:.2f}%")
 
 
 ########################################################################
