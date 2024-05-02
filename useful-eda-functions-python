@@ -45,6 +45,7 @@ def iqr_outliers(df, column):
     Calculate IQR and identify outliers for a specific column
     
     Calculates the Interquartile Range (IQR) of the specified column in the DataFrame and identifies the number of outliers based on the IQR method.
+    
     '''
     # Check if the column exists in the DataFrame
     if column not in df.columns:
@@ -77,7 +78,8 @@ def iqr_outliers(df, column):
     # Calculate proportion of outliers in the dataset
     proportion_outliers = num_total_outliers / len(df) * 100
     print(f"Proportion of outliers in the dataset: {proportion_outliers:.2f}%")
-
+    
+    return lower_outliers, upper_outliers, num_total_outliers
 
 ########################################################################
 
