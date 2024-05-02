@@ -39,7 +39,7 @@ def plot_cats(df=df, color='navy'):
 
 ########################################################################
 
-# Function for calculating IQR and identifying outliers for a column 
+# Custom function for calculating IQR and identifying outliers
 def iqr_outliers(df, column):
     '''
     Calculate IQR and identify outliers for a specific column
@@ -63,15 +63,15 @@ def iqr_outliers(df, column):
     print(f"IQR: {iqr}")
 
     # Identify outliers below q1 and above q3
-    outliers_below_q1 = df[df[column] < q1 - 1.5 * iqr]
-    outliers_above_q3 = df[df[column] > q3 + 1.5 * iqr]
+    lower_outliers = df[df[column] < q1 - 1.5 * iqr]
+    upper_outliers = df[df[column] > q3 + 1.5 * iqr]
     
     # Calculate the number of outliers below q1 and above q3
-    num_outliers_below_q1 = len(outliers_below_q1)
-    num_outliers_above_q3 = len(outliers_above_q3)
-    num_total_outliers = num_outliers_below_q1 + num_outliers_above_q3
-    print(f"Number of outliers below Q1: {num_outliers_below_q1}")
-    print(f"Number of outliers above Q3: {num_outliers_above_q3}")
+    num_lower_outliers = len(lower_outliers)
+    num_upper_outliers = len(upper_outliers)
+    num_total_outliers = num_lower_outliers + num_upper_outliers
+    print(f"Number of lower outliers: {num_lower_outliers}")
+    print(f"Number of upper outliers: {num_upper_outliers}")
     print(f"Total number of outliers: {num_total_outliers}")
 
 
