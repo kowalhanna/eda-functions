@@ -3,7 +3,7 @@ This repository stores useful Python functions for exploratory data analysis.
 
 ## Exploratory Data Analysis Functions
 
-This repository contains several Python functions designed to facilitate EDA tasks. These functions are useful for visualizing and analyzing categorical and numerical features in a DataFrame.
+This repository contains several Python functions designed to facilitate EDA tasks and help to select the right model for further tuning. These functions are useful for visualizing and analyzing categorical and numerical features in a DataFrame, as well as model selection process.
 
 ### Functions Included:
 
