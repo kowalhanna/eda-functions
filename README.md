@@ -38,4 +38,14 @@ This repository contains several Python functions designed to facilitate EDA tas
    - *Parameters:*
      - `df`: DataFrame - Input DataFrame containing numerical columns.
      - `color`: str, optional - Color for the plots. Default is 'navy'.
-       
+
+5. **model_selection**
+   - *Description:* Perform Model Selection by Evaluating Performance Using Cross-Validation
+   - *Functionality:* This function evaluates the performance of different models using cross-validation and compares them based on the specified evaluation metric.
+   - *Usage:* `model_selection(models, scoring_metric, X_train=X_train, y_train=y_train)`
+   - *Parameters:*
+     - `models`: dict - A dictionary containing model names as keys and corresponding model instances as values.
+     - `scoring_metric`: str - The evaluation metric to use for comparing models.
+     - `X_train`: array-like, optional - The feature matrix of the training data. Default is `X_train`.
+     - `y_train`: array-like, optional - The target vector of the training data. Default is `y_train`.
+   - *Returns:* `results (dict)` - A dictionary containing model names as keys and the corresponding cross-validation results as values.
